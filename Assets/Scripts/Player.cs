@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
+    public RaycastHit Hit;
     public GameObject Laser;
     public Animator Anim;
     public GameObject GameManager;
@@ -316,11 +317,8 @@ public class Player : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit, ShootRange))
         {
-            GameObject _Laser = Instantiate(Laser);
-            _Laser.GetComponent<LineRenderer>().SetPosition(0, PlayerCam.transform.position);
-            _Laser.GetComponent<LineRenderer>().SetPosition(1, hit.point);
-
-            StartCoroutine(WaitForDestroy());
+            Hit = hit;
+            CreateLaser();
 
             Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Player")
@@ -344,6 +342,13 @@ public class Player : NetworkBehaviour
                 }
             }
         }
+    }
+    public void CreateLaser()
+    {
+        GameObject _Laser = Instantiate(Laser);
+        _Laser.GetComponent<LineRenderer>().SetPosition(0, PlayerCam.transform.position);
+        _Laser.GetComponent<LineRenderer>().SetPosition(1, Hit.point);
+        StartCoroutine(WaitForDestroy());
     }
 
     [Command]

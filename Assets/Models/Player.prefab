@@ -603,7 +603,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 7607549944704046795}
-  Knob: {fileID: 0}
 --- !u!95 &6264137326788056719
 Animator:
   serializedVersion: 3
